@@ -1,7 +1,4 @@
 <?php
-
-echo "HOLA DOS";
-exit();
 require_once('../libs/tcpdf/config/lang/eng.php');
 require_once('../libs/tcpdf/tcpdf.php');
 include('../db/dbclass.php');
@@ -132,7 +129,7 @@ INNER JOIN entidades AS c ON b.id_entidad = c.id WHERE a.id = '$id'");
         }
 
     }
-
+echo "HOLA DOS";exit();//1b4r
 	//////////
      public function get_fecha($fecha)
         {
