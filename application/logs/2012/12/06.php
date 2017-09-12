@@ -1,0 +1,6 @@
+<?php defined('SYSPATH') or die('No direct script access.'); ?>
+
+2012-12-06 14:19:40 --- ERROR: Database_Exception [ 0 ]: [1062] Duplicate entry '/2012-0000' for key 1 ( INSERT INTO `nurs` (`nur`, `id_user`, `fecha_creacion`, `username`) VALUES ('/2012-0000', '51', '2012-12-06 14:19:40', 'ypfb sistemas') ) ~ MODPATH/database/classes/kohana/database/mysql.php [ 181 ]
+2012-12-06 14:21:27 --- ERROR: Database_Exception [ 0 ]: [1062] Duplicate entry '/2012-0000' for key 1 ( INSERT INTO `nurs` (`nur`, `id_user`, `fecha_creacion`, `username`) VALUES ('/2012-0000', '51', '2012-12-06 14:21:27', 'ypfb sistemas') ) ~ MODPATH/database/classes/kohana/database/mysql.php [ 181 ]
+2012-12-06 14:23:37 --- ERROR: Database_Exception [ 0 ]: [1062] Duplicate entry '/2012-0000' for key 1 ( INSERT INTO `nurs` (`nur`, `id_user`, `fecha_creacion`, `username`) VALUES ('/2012-0000', '51', '2012-12-06 14:23:37', 'ypfb sistemas') ) ~ MODPATH/database/classes/kohana/database/mysql.php [ 181 ]
+2012-12-06 14:40:41 --- ERROR: Database_Exception [ 0 ]: [1062] Duplicate entry '/2012-0000' for key 1 ( INSERT INTO `nurs` (`nur`, `id_user`, `fecha_creacion`, `username`) VALUES ('/2012-0000', '51', '2012-12-06 14:40:41', 'ypfb sistemas') ) ~ MODPATH/database/classes/kohana/database/mysql.php [ 181 ]

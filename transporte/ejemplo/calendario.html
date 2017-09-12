@@ -1,0 +1,30 @@
+<!doctype html>
+  
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>jQuery UI Datepicker - Ejemplo de regionalización al español</title>
+  <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" />
+  <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+  <script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
+  <script src="ui.datepicker-es-MX.js"></script>
+  <script>
+  $(function() {
+    $.datepicker.setDefaults($.datepicker.regional['es-MX']);
+    $('#input_campo_date').datepicker({
+                        'setDate': '25/02/2013'
+                        , altField: '#fecha_texto'
+                        , altFormat: "DD, d 'de' MM 'de' yy"
+                    });
+  });
+  </script>
+</head>
+<body>
+  
+<p>Fecha: <input type="text" id="input_campo_date" /> <input type="text" id="fecha_texto" size="40" /></p>
+
+  <input type="time" name="time" placeholder="hrs:mins" pattern="^([0-1]?[0-9]|2[0-4]):([0-5][0-9])(:[0-5][0-9])?$" class="inputs time" required>
+          <input type="time" name="time" />
+ 
+</body>
+</html>

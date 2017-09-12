@@ -1,0 +1,15 @@
+<?php defined('SYSPATH') or die('No direct script access.'); ?>
+
+2014-01-22 20:50:15 --- ERROR: Database_Exception [ 0 ]: [2005] Unknown MySQL server host 'bd01' (1) ~ MODPATH/database/classes/kohana/database/mysql.php [ 67 ]
+2014-01-22 20:50:35 --- ERROR: Database_Exception [ 0 ]: [2005] Unknown MySQL server host 'bd01' (1) ~ MODPATH/database/classes/kohana/database/mysql.php [ 67 ]
+2014-01-22 20:52:07 --- ERROR: Database_Exception [ 0 ]: [2005] Unknown MySQL server host 'bd01' (1) ~ MODPATH/database/classes/kohana/database/mysql.php [ 67 ]
+2014-01-22 20:52:27 --- ERROR: Database_Exception [ 0 ]: [2005] Unknown MySQL server host 'bd01' (1) ~ MODPATH/database/classes/kohana/database/mysql.php [ 67 ]
+2014-01-22 20:53:01 --- ERROR: Database_Exception [ 0 ]: [2005] Unknown MySQL server host 'bd01' (1) ~ MODPATH/database/classes/kohana/database/mysql.php [ 67 ]
+2014-01-22 20:57:06 --- ERROR: Database_Exception [ 0 ]: [2005] Unknown MySQL server host 'bd01' (1) ~ MODPATH/database/classes/kohana/database/mysql.php [ 67 ]
+2014-01-22 21:00:28 --- ERROR: Database_Exception [ 0 ]: [2005] Unknown MySQL server host 'bd01' (1) ~ MODPATH/database/classes/kohana/database/mysql.php [ 67 ]
+2014-01-22 21:00:54 --- ERROR: Database_Exception [ 0 ]: [2005] Unknown MySQL server host 'bd01' (1) ~ MODPATH/database/classes/kohana/database/mysql.php [ 67 ]
+2014-01-22 21:01:42 --- ERROR: Database_Exception [ 0 ]: [2005] Unknown MySQL server host 'bd01' (1) ~ MODPATH/database/classes/kohana/database/mysql.php [ 67 ]
+2014-01-22 21:12:37 --- ERROR: Database_Exception [ 0 ]: [2005] Unknown MySQL server host 'bd01' (1) ~ MODPATH/database/classes/kohana/database/mysql.php [ 67 ]
+2014-01-22 21:13:00 --- ERROR: Database_Exception [ 0 ]: [2005] Unknown MySQL server host 'bd01' (1) ~ MODPATH/database/classes/kohana/database/mysql.php [ 67 ]
+2014-01-22 21:13:24 --- ERROR: Database_Exception [ 0 ]: [2005] Unknown MySQL server host 'bd01' (1) ~ MODPATH/database/classes/kohana/database/mysql.php [ 67 ]
+2014-01-22 21:14:05 --- ERROR: Database_Exception [ 0 ]: [2005] Unknown MySQL server host 'bd01' (1) ~ MODPATH/database/classes/kohana/database/mysql.php [ 67 ]
