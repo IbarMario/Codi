@@ -61,18 +61,7 @@ INNER JOIN entidades AS c ON b.id_entidad = c.id WHERE a.id = '$id'");
             $pie2 = $rs->pie_2;
             $id_entidad=$rs->id;
         }
-        /*if($id_entidad<>2 && $id_entidad<>4){
-        // Linea vertical negra
-        $style = array('width' => 1.5, 'cap' => 'butt', 'join' => 'miter', 'dash' => 0, 'color' => array(0));
-        $this->Line(140, 257, 140, 272, $style);
-        // logo quinua
-        $this->Image('../media/logos/logo_quinua.jpg', 140, 253, 40, 22, 'JPG');
-        // Pie de pagina
-        $this->SetFont('tahoma', 'I', 7);
-        $this->MultiCell(85, 0, $pie1, 0, 'R', false, 1, 50, 260, true, 0, false, true, 0, 'T', false);
-        $this->MultiCell(90, 0, $pie2, 0, 'R', false, 1, 45, 266, true, 0, false, true, 0, 'T', false);
-        $this->SetY(30);
-        }*/
+        
         if ($id_entidad <> 2 && $id_entidad <> 4) {
 
             // Position at 15 mm from bottom
@@ -150,8 +139,6 @@ try {
                                WHERE d.id='$id'");
     // call the stored procedure
     $stmt->execute();
-    //echo "<B>outputting...</B><BR>";
-    //$pdf->Ln(7);
     while ($rs = $stmt->fetch(PDO::FETCH_OBJ)) {
         $pdf->SetFont('Helvetica', 'B', 15);
         $pdf->Write(0, strtoupper($rs->tipo), '', 0, 'C');
@@ -203,15 +190,9 @@ try {
         $pdf->writeHTML('Adj. ' . strtoupper($rs->adjuntos));
         if($rs->mosca_remitente != '')
         $pdf->writeHTML(strtoupper($rs->mosca_remitente));
-        /*   $pdf->SetY(-5);
-          // Set font
-          $pdf->SetFont('tahoma', 'I', 7);
-          $pdf->Write(0, $fecha,'',0,'L');
-         * */
-
         $nombre.='_' . substr($rs->cite_original, -10, 6);
+	
     }
-    //echo "<BR><B>".date("r")."</B>";
 } catch (PDOException $e) {
     print "Error!: " . $e->getMessage() . "<br/>";
     die();
