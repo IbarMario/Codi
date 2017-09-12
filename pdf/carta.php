@@ -1,5 +1,6 @@
 <?php
 
+echo "HOLA";exit();
 require_once('../libs/tcpdf/config/lang/eng.php');
 require_once('../libs/tcpdf/tcpdf.php');
 include('../db/dbclass.php');
