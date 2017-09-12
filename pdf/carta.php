@@ -5,7 +5,7 @@ include('../db/dbclass.php');
 $id = $_GET['id'];
 
 // Extend the TCPDF class to create custom Header and Footer
-echo "HOLA DOS";exit();//1b4r
+echo "HOLA TRES";exit();//1b4r
 
 class MYPDF extends TCPDF {
 
