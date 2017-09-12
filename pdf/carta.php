@@ -5,6 +5,8 @@ include('../db/dbclass.php');
 $id = $_GET['id'];
 
 // Extend the TCPDF class to create custom Header and Footer
+echo "HOLA DOS";exit();//1b4r
+
 class MYPDF extends TCPDF {
 
     public $datatime;
@@ -129,7 +131,6 @@ INNER JOIN entidades AS c ON b.id_entidad = c.id WHERE a.id = '$id'");
         }
 
     }
-echo "HOLA DOS";exit();//1b4r
 	//////////
      public function get_fecha($fecha)
         {
