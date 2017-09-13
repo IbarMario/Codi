@@ -19,15 +19,26 @@ class MYPDF extends TCPDF {
 INNER JOIN entidades AS c ON b.id_entidad = c.id WHERE a.id = '$id'");
         $stmt->execute();
         //echo "<B>outputting...</B><BR>";
-        $image_file = '../media/logos/logo_MDPyEP.jpg';
+        $image_file = 'logo.jpg';
         while ($rs2 = $stmt->fetch(PDO::FETCH_OBJ)) {
             if ($rs2->logo) {
                 $image_file = '../media/logos/' . $rs2->logo;
             }
             $id_entidad=$rs2->id;
         }
-        //$this->Image('escudo_b.jpg', 18 ,8, 20 , 20,'JPG', '');
-        $this->Image($image_file, 137, 7, 60, 18, 'JPG');
+        if($id_entidad<>2 && $id_entidad<>4 && $id_entidad<>5 && $id_entidad<>6){
+        //$this->Image($image_file, 80, 5, 60, 25, 'PNG');
+       ///// $this->Image($image_file, 70, 5, 80, 30, 'PNG');
+
+	 // 1b4r $this->Image('escudo_b.jpg', 18 ,8, 20 , 20,'JPG', '');
+        $this->Image($image_file, 137, 7, 60, 18, 'PNG');
+        }
+        if ($id_entidad==5 || $id_entidad==6) {
+            $image_file2='../media/logos/logo_MDPyEP.png';
+        $this->Image($image_file, 150, 5, 50, 20, 'PNG');
+        $this->Image($image_file2, 20, 5, 60, 25, 'PNG');
+        }
+
 
         $this->SetFont('Helvetica', 'B', 20);
         //$this->Ln(120);
@@ -58,11 +69,11 @@ INNER JOIN entidades AS c ON b.id_entidad = c.id WHERE a.id = '$id'");
         // Set font
         $this->SetFont('Helvetica', 'I', 6);
 
-        $this->Cell(0, 10, iconv("ISO-8859-1","UTF-8",$pie1), '0', false, 'C', 0, '', 0, false, 'T', 'M');
+        $this->Cell(0, 10, utf8_encode($pie1), '0', false, 'C', 0, '', 0, false, 'T', 'M');
         $this->Ln(2); $this->Ln(2);
-	 $this->Cell(0, 10, iconv("ISO-8859-1","UTF-8",$pie3), '0', false, 'C', 0, '', 0, false, 'T', 'M');
+	 $this->Cell(0, 10, utf8_encode($pie3), '0', false, 'C', 0, '', 0, false, 'T', 'M');
 	 $this->Ln(2);
-        $this->Cell(0, 15, iconv("ISO-8859-1","UTF-8",$pie2), 0, false, 'C', 0, '', 0, false, 'T', 'M');
+        $this->Cell(0, 15, utf8_encode($pie2), 0, false, 'C', 0, '', 0, false, 'T', 'M');
         }
     }
 
@@ -151,20 +162,20 @@ try {
         $pdf->SetFont('Helvetica', 'B', 10);
         $pdf->Cell(15, 5, 'A:');
         $pdf->SetFont('Helvetica', '', 10);
-        /*$pdf->Write(0, iconv("ISO-8859-1","UTF-8",$rs->nombre_destinatario), '', 0, 'L');
+        /*$pdf->Write(0, utf8_encode($rs->nombre_destinatario), '', 0, 'L');
         $pdf->Ln();
         $pdf->Cell(15, 5, '');
         $pdf->SetFont('tahoma', 'B', 10);
-        $pdf->Write(0, iconv("ISO-8859-1","UTF-8",$rs->cargo_destinatario), '', 0, 'L');
+        $pdf->Write(0, utf8_encode($rs->cargo_destinatario), '', 0, 'L');
         $pdf->Ln(10);*/
         $destinatario = explode(',',$rs->nombre_destinatario);
         $cargo_dest = explode(',',$rs->cargo_destinatario);
         $i = 0;
         $pdf->SetFont('Helvetica', '', 10);
-        $pdf->Write(0, iconv("ISO-8859-1","UTF-8",$rs->titulo), '', 0, 'L');
+        $pdf->Write(0, utf8_encode($rs->titulo), '', 0, 'L');
         $html='<table>';
         foreach( $destinatario as $dest) {
-            $html .= '<tr><td>'.ltrim(iconv("ISO-8859-1","UTF-8",$dest)).'</td></tr><tr><td><b>'.ltrim(iconv("ISO-8859-1","UTF-8",$cargo_dest[$i])).'</b></td></tr>';
+            $html .= '<tr><td>'.ltrim(utf8_encode($dest)).'</td></tr><tr><td><b>'.ltrim(utf8_encode($cargo_dest[$i])).'</b></td></tr>';
             $i++;
         }
         $html .='</html>';
@@ -183,7 +194,7 @@ try {
                         $salto = '<br /><br /><br /><br /> ';
                     else
                         $salto = '';
-                    $html .= '<tr><td>'.$salto.ltrim(iconv("ISO-8859-1","UTF-8",$v)).'</td></tr><tr><td><b>'.ltrim(iconv("ISO-8859-1","UTF-8",$cargo_vias[$i])).'</b></td></tr>';
+                    $html .= '<tr><td>'.$salto.ltrim(utf8_encode($v)).'</td></tr><tr><td><b>'.ltrim(utf8_encode($cargo_vias[$i])).'</b></td></tr>';
                     $i++;
                 }
                 $html .='</table>';
@@ -193,11 +204,11 @@ try {
         $pdf->SetFont('Helvetica', 'B', 10);
         $pdf->Cell(15, 5, 'De:');
         $pdf->SetFont('Helvetica', '', 10);
-        $pdf->Write(0, iconv("ISO-8859-1","UTF-8",$rs->nombre_remitente), '', 0, 'L');
+        $pdf->Write(0, utf8_encode($rs->nombre_remitente), '', 0, 'L');
         $pdf->Ln();
         $pdf->Cell(15, 5, '');
         $pdf->SetFont('Helvetica', 'B', 10);
-        $pdf->Write(0, iconv("ISO-8859-1","UTF-8",$rs->cargo_remitente), '', 0, 'L');
+        $pdf->Write(0, utf8_encode($rs->cargo_remitente), '', 0, 'L');
         $pdf->Ln(10);
         $pdf->Cell(15, 5, 'Fecha:');
         $pdf->SetFont('Helvetica', '', 10);
@@ -209,10 +220,10 @@ try {
         $pdf->SetFont('Helvetica', 'B', 10);
         $pdf->Cell(15, 5, 'Ref:');
         $pdf->SetFont('Helvetica', '', 10);
-        $pdf->MultiCell(155, 5, iconv("ISO-8859-1","UTF-8",$rs->referencia), 0, 'L');
+        $pdf->MultiCell(155, 5, utf8_encode($rs->referencia), 0, 'L');
         $pdf->Ln(-5);
         //$pdf->writeHTML('<table></table>');
-        $pdf->writeHTML(iconv("ISO-8859-1","UTF-8",$rs->contenido));
+        $pdf->writeHTML(utf8_encode($rs->contenido));
 
         $pdf->SetFont('Helvetica', 'B', 10);
 

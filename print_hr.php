@@ -97,15 +97,8 @@ $pdf->AddPage();
 
 try {
     while ($rs = $stmt->fetch(PDO::FETCH_LAZY)) {
-
-    //$pdf->SetFont('Arial', 'B', 18);
-
-  //  $image_file = 'media/logos/'.$rs->logo;
-   // $pdf->Image($image_file, 12, 12, 55, 25, 'png', '', '', false, 300, '', FALSE, FALSE, 0);
-
-    // 1b4r $pdf->Image('escudo_b.png' , 25 ,14, 20 , 20,'PNG', '');
     $image_file = 'media/logos/'.$rs->logo;
-    $pdf->Image($image_file, 75, 12, 60, 20, 'png', '', '', false, 300, '', FALSE, FALSE, 0);
+    $pdf->Image($image_file, 75, 12, 60, 20, 'jpg', '', '', false, 300, '', FALSE, FALSE, 0);
 
     $pdf->Cell(60, 30, '', 1,FALSE,'C');
    ////// $pdf->Cell(75, 30, 'HOJA DE RUTA', 1,FALSE,'C');
@@ -147,22 +140,22 @@ try {
     {
         if(strlen($rs->institucion_remitente)>60)
         {
-            $pdf->MultiCell(115, 10, utf8_encode($rs->institucion_remitente), 1,'L');
+            $pdf->MultiCell(115, 10, iconv("ISO-8859-1","UTF-8",$rs->institucion_remitente), 1,'L');
         }
         else
         {
-            $pdf->Cell(115, 10, utf8_encode($rs->institucion_remitente), 1,'L');
+            $pdf->Cell(115, 10, iconv("ISO-8859-1","UTF-8",$rs->institucion_remitente), 1,'L');
         }
     }
     else
     {
         if(strlen($rs->entidad)>80)
         {
-            $pdf->MultiCell(115, 5, utf8_encode($rs->entidad), 1,'L');
+            $pdf->MultiCell(115, 5, iconv("ISO-8859-1","UTF-8",$rs->entidad), 1,'L');
         }
         else
         {
-            $pdf->Cell(115, 10, utf8_encode($rs->entidad), 1,'L');
+            $pdf->Cell(115, 10, iconv("ISO-8859-1","UTF-8",$rs->entidad), 1,'L');
         }
     }
     //fecha
@@ -194,23 +187,23 @@ try {
     $pdf->SetXY(10, 50);
     $pdf->Cell(30, 10, 'REMITENTE:', 1,FALSE,'L');
 
-    //$pdf->Cell(105, 3, utf8_encode($rs->cargo_remitente), 0,FALSE,'L');
+    //$pdf->Cell(105, 3, iconv("ISO-8859-1","UTF-8",$rs->cargo_remitente), 0,FALSE,'L');
 
     if(strlen(trim($rs->cargo_remitente))>60)
     {
             $pdf->SetFont('helvetica', '', 8);
-            $pdf->Cell(115, 3, utf8_encode($rs->nombre_remitente), 0,FALSE,'L');
+            $pdf->Cell(115, 3, iconv("ISO-8859-1","UTF-8",$rs->nombre_remitente), 0,FALSE,'L');
             $pdf->SetFont('helvetica', 'B', 8);
             $pdf->SetXY(40, 53);
-            $pdf->MultiCell(115, 3, utf8_encode(trim($rs->cargo_remitente)), 0,'L');
+            $pdf->MultiCell(115, 3, iconv("ISO-8859-1","UTF-8",trim($rs->cargo_remitente)), 0,'L');
     }
         else
     {
             $pdf->SetFont('helvetica', '', 9);
-            $pdf->Cell(115, 6, utf8_encode($rs->nombre_remitente), 0,FALSE,'L');
+            $pdf->Cell(115, 6, iconv("ISO-8859-1","UTF-8",$rs->nombre_remitente), 0,FALSE,'L');
             $pdf->SetFont('helvetica', 'B', 9);
             $pdf->SetXY(40, 55);
-            $pdf->Cell(115, 3, utf8_encode(trim($rs->cargo_remitente)), 0,'L');
+            $pdf->Cell(115, 3, iconv("ISO-8859-1","UTF-8",trim($rs->cargo_remitente)), 0,'L');
     }
 
 
@@ -220,25 +213,16 @@ try {
     $pdf->SetXY(155, 50);
     $pdf->SetFontSize(7);
     $pdf->Cell(13, 10, 'PROCESO', 1,FALSE,'R');
-    $pdf->Cell(42, 10, utf8_encode($rs->proceso), 1,FALSE,'C');
-    //$pdf->MultiCell(42, 10, $rs->proceso, 1,'C');
+    $pdf->Cell(42, 10, iconv("ISO-8859-1","UTF-8",$rs->proceso), 1,FALSE,'C');
     $pdf->SetXY(10, 60);
     $pdf->SetFontSize(9);
     $pdf->Cell(30, 11, 'REFERENCIA:', 1,FALSE,'L');
     $pdf->SetFont('helvetica', '', 8);
-    // if(strlen($rs->referencia)>100)
-    // {
-       $pdf->MultiCell(170, 11, utf8_encode($rs->referencia), 1, 'L', 0, 0, '', '', true, 0, false, false, 11, 'M');
+       $pdf->MultiCell(170, 11, iconv("ISO-8859-1","UTF-8",$rs->referencia), 1, 'L', 0, 0, '', '', true, 0, false, false, 11, 'M');
        $pdf->Ln();
-    // }
-    // else
-    // {
-    //    $pdf->Cell(170, 11, $rs->referencia, 1,'L');
-    //     $pdf->Ln();
-    // }
 
     $pdf->Cell(30, 5, 'ADJUNTO:', 1,FALSE,'L');
-    $pdf->Cell(145, 5, utf8_encode($rs->adjuntos), 'BLR',FALSE,'L');
+    $pdf->Cell(145, 5, iconv("ISO-8859-1","UTF-8",$rs->adjuntos), 'BLR',FALSE,'L');
     $pdf->Cell(15, 5, 'HOJAS', 'BLR',FALSE,'L');
     $pdf->Cell(10, 5, $rs->hojas, 'BLR',FALSE,'C');
     $pdf->Ln();
@@ -250,13 +234,13 @@ try {
     $pdf->Cell(20, 7, 'Para:', 1,FALSE,'L',true);
     $pdf->SetFontSize(8);
     $pdf->SetFillColor(0);
-    $pdf->Cell(60, 7, utf8_encode($nombre_receptor), 1,FALSE,'L');
+    $pdf->Cell(60, 7, iconv("ISO-8859-1","UTF-8",$nombre_receptor), 1,FALSE,'L');
     $pdf->SetFontSize(10);
     $pdf->SetFillColor(240,245,255);
     $pdf->Cell(10, 7, 'CC:', 1,FALSE,'L',true);
     $pdf->SetFillColor(0);
     $pdf->SetFontSize(8);
-    $pdf->Cell(110, 7, utf8_encode($copias), 1,FALSE,'L');
+    $pdf->Cell(110, 7, iconv("ISO-8859-1","UTF-8",$copias), 1,FALSE,'L');
     $pdf->ln();
     $pdf->SetFontSize(4);
     $pdf->Cell(31, 5, 'ACCION NECESARIA Y RESPUESTA', 1,FALSE,'L');
@@ -331,10 +315,7 @@ $pdf->Cell(40, 5, '                 INGRESO', 1,FALSE,'L');
     $pdf->Ln();
     //proveido
         $pdf->SetXY(10,92);
-        $pdf->MultiCell(120, 39, utf8_encode($proveido), 1, 'L', 0, 0, '', '', true, 0, false, true, 40, 'M');
-
-		/*$pdf->Cell(40, 5, '                 INGRESOaaaa', 1,FALSE,'L');
-		$pdf->Cell(40, 5, '                 SALIDA', 1,FALSE,'L');*/
+        $pdf->MultiCell(120, 39, iconv("ISO-8859-1","UTF-8",$proveido), 1, 'L', 0, 0, '', '', true, 0, false, true, 40, 'M');
 
 		$pdf->SetTextColor(243,249,255);
 

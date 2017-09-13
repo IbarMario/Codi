@@ -7,25 +7,41 @@ $id = $_GET['id'];
 
 // Extend the TCPDF class to create custom Header and Footer
 class MYPDF extends TCPDF {
-	//Page header
+
+    //Page header
     public function Header() {
 
+        // codigo de freddy
+        // dir logos /codice/media/logos/
         $id = $_GET['id'];
         $dbh = New db();
-        $stmt = $dbh->prepare("SELECT c.logo,c.id FROM documentos AS a INNER JOIN oficinas AS b ON a.id_oficina = b.id INNER  JOIN entidades AS c ON b.id_entidad = c.id WHERE a.id = '$id'");
+        $stmt = $dbh->prepare("SELECT c.logo,c.id FROM documentos AS a INNER JOIN oficinas AS b ON a.id_oficina = b.id
+INNER JOIN entidades AS c ON b.id_entidad = c.id WHERE a.id = '$id'");
         $stmt->execute();
-        $image2_file = '../media/logos/logo_MDPyEP.jpg';
+        //echo "<B>outputting...</B><BR>";
+        $image_file = 'logo.jpg';
         while ($rs2 = $stmt->fetch(PDO::FETCH_OBJ)) {
             if ($rs2->logo) {
-                $image2_file = '../media/logos/' . $rs2->logo;
+                $image_file = '../media/logos/' . $rs2->logo;
             }
             $id_entidad = $rs2->id;
         }
         if($id_entidad<>2 && $id_entidad<>4 && $id_entidad<>5 && $id_entidad<>6){
-	 		//$this->Image('escudo_b.jpg', 18 ,8, 20 , 20,'JPG', '');
-        	$this->Image($image2_file, 137, 7, 60, 18, 'JPG');
+            ////$this->Image($image_file, 70, 5, 80, 30, 'PNG');
+	 // 1b4r $this->Image('escudo_b.jpg', 18 ,8, 20 , 20,'JPG', '');
+        $this->Image($image_file, 137, 7, 60, 18, 'PNG');
+
+
         }
+        if ($id_entidad==5 || $id_entidad==6) {
+            $image_file2='../media/logos/logo_MDPyEP.png';
+        $this->Image($image_file, 150, 5, 50, 20, 'PNG');
+        $this->Image($image_file2, 20, 5, 60, 25, 'PNG');
+        }
+
+
         $this->SetFont('Helvetica', 'B', 20);
+        //$this->Ln(120);
     }
 
     // Page footer
@@ -40,21 +56,36 @@ class MYPDF extends TCPDF {
                                INNER JOIN entidades e ON o.id_entidad=e.id
                                WHERE d.id='$id'");
         $stmt->execute();
-        $pie1 = '';
-        $pie2 = '';
         while ($rs = $stmt->fetch(PDO::FETCH_OBJ)) {
             $pie1 = $rs->pie_1;
             $pie2 = $rs->pie_2;
             $id_entidad=$rs->id;
         }
-        // Position at 15 mm from bottom
+        /*if($id_entidad<>2 && $id_entidad<>4){
+        // Linea vertical negra
+        $style = array('width' => 1.5, 'cap' => 'butt', 'join' => 'miter', 'dash' => 0, 'color' => array(0));
+        $this->Line(140, 257, 140, 272, $style);
+        // logo quinua
+        $this->Image('../media/logos/logo_quinua.jpg', 140, 253, 40, 22, 'JPG');
+        // Pie de pagina
+        $this->SetFont('tahoma', 'I', 7);
+        $this->MultiCell(85, 0, $pie1, 0, 'R', false, 1, 50, 260, true, 0, false, true, 0, 'T', false);
+        $this->MultiCell(90, 0, $pie2, 0, 'R', false, 1, 45, 266, true, 0, false, true, 0, 'T', false);
+        $this->SetY(30);
+        }*/
+        if ($id_entidad <> 2 && $id_entidad <> 4) {
+
+            // Position at 15 mm from bottom
         $this->SetY(-15);
         // Set font
         $this->SetFont('Helvetica', 'I', 7);
-        $this->Cell(0, 10,iconv("ISO-8859-1","UTF-8", $pie1), 'T', false, 'C', 0, '', 0, false, 'T', 'M');
+
+        $this->Cell(0, 10, utf8_encode($pie1), 'T', false, 'C', 0, '', 0, false, 'T', 'M');
         $this->Ln(2);
-        $this->Cell(0, 15,iconv("ISO-8859-1","UTF-8", $pie2), 0, false, 'C', 0, '', 0, false, 'T', 'M');
+        $this->Cell(0, 15, utf8_encode($pie2), 0, false, 'C', 0, '', 0, false, 'T', 'M');
+        }
     }
+
 }
 
 // create new PDF document
@@ -86,15 +117,20 @@ while ($rs = $stmt->fetch(PDO::FETCH_OBJ)) {
             $id_entidad=$rs->id_entidad;
         }
 $margin_top=38;
+if($id_entidad==2){
+    $margin_top=33;
+}elseif ($id_entidad==4) {
+    $margin_top=60;
+}
+
 //set margins
-//$pdf->SetMargins(20, $margin_top, 20);
-$pdf->SetMargins(20, PDF_MARGIN_TOP, 20);
+$pdf->SetMargins(20, $margin_top, 20);
+//$pdf->SetMargins(20, PDF_MARGIN_TOP, 20);
 $pdf->SetHeaderMargin(PDF_MARGIN_HEADER);
 $pdf->SetFooterMargin(PDF_MARGIN_FOOTER);
 
 //set auto page breaks
 $pdf->SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);
-$pdf->SetAutoPageBreak(FALSE, PDF_MARGIN_BOTTOM);
 
 //set image scale factor
 $pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
@@ -106,8 +142,7 @@ $pdf->SetFont('Helvetica', 'B', 18);
 
 // add a page
 $pdf->AddPage();
-$nombre = 'circular';
-
+$nombre = 'informe';
 try {
     $dbh = New db();
     $stmt = $dbh->prepare("SELECT * FROM documentos d
@@ -115,6 +150,8 @@ try {
                                WHERE d.id='$id'");
     // call the stored procedure
     $stmt->execute();
+    //echo "<B>outputting...</B><BR>";
+    //$pdf->Ln(7);
     while ($rs = $stmt->fetch(PDO::FETCH_OBJ)) {
         $pdf->SetFont('Helvetica', 'B', 15);
         $pdf->Write(0, strtoupper($rs->tipo), '', 0, 'C');
@@ -129,20 +166,20 @@ try {
         $pdf->Cell(15, 5, 'A:');
         $pdf->Ln();
         $pdf->SetFont('Helvetica', '', 10);
-        $pdf->Write(0, iconv("ISO-8859-1","UTF-8",$rs->nombre_destinatario), '', 0, 'L');
+        $pdf->Write(0, utf8_encode($rs->nombre_destinatario), '', 0, 'L');
         $pdf->Ln();
         $pdf->Cell(15, 5, '');
         $pdf->SetFont('Helvetica', 'B', 10);
-        $pdf->Write(0, iconv("ISO-8859-1","UTF-8",$rs->cargo_destinatario), '', 0, 'L');
+        $pdf->Write(0, utf8_encode($rs->cargo_destinatario), '', 0, 'L');
         $pdf->Ln(5);
         $pdf->SetFont('Helvetica', 'B', 10);
         $pdf->Cell(15, 5, 'De:');
         $pdf->SetFont('Helvetica', '', 10);
-        $pdf->Write(0, iconv("ISO-8859-1","UTF-8",$rs->nombre_remitente), '', 0, 'L');
+        $pdf->Write(0, utf8_encode($rs->nombre_remitente), '', 0, 'L');
         $pdf->Ln();
         $pdf->Cell(15, 5, '');
         $pdf->SetFont('Helvetica', 'B', 10);
-        $pdf->Write(0, iconv("ISO-8859-1","UTF-8",$rs->cargo_remitente), '', 0, 'L');
+        $pdf->Write(0, utf8_encode($rs->cargo_remitente), '', 0, 'L');
         $pdf->Ln(10);
         $pdf->Cell(15, 5, 'Fecha:');
         $pdf->SetFont('Helvetica', '', 10);
@@ -154,21 +191,24 @@ try {
         $pdf->SetFont('Helvetica', 'B', 10);
         $pdf->Cell(15, 5, 'Ref:');
         $pdf->SetFont('Helvetica', '', 10);
-        $pdf->MultiCell(160, 5, iconv("ISO-8859-1","UTF-8",$rs->referencia), 0, 'L');
+        $pdf->MultiCell(160, 5, utf8_encode($rs->referencia), 0, 'L');
         $pdf->Ln(0);
-        $pdf->writeHTML(iconv("ISO-8859-1","UTF-8",$rs->contenido));
+        $pdf->writeHTML($rs->contenido);
         $pdf->Ln(10);
         $pdf->SetFont('Helvetica', '', 5);
 
-        if($rs->copias){
-	        $pdf->writeHTML('cc. ' . strtoupper($rs->copias));
-	    }
-        if($rs->adjuntos){
-	        $pdf->writeHTML('Adj. ' . strtoupper($rs->adjuntos));
-	    }
-        if($rs->mosca_remitente){
-	        $pdf->writeHTML(strtoupper($rs->mosca_remitente));
-		}
+        if($rs->copias != '')
+        $pdf->writeHTML('cc. ' . strtoupper($rs->copias));
+        if($rs->adjuntos != '')
+        $pdf->writeHTML('Adj. ' . strtoupper($rs->adjuntos));
+        if($rs->mosca_remitente != '')
+        $pdf->writeHTML(strtoupper($rs->mosca_remitente));
+        /*   $pdf->SetY(-5);
+          // Set font
+          $pdf->SetFont('tahoma', 'I', 7);
+          $pdf->Write(0, $fecha,'',0,'L');
+         * */
+
         $nombre.='_' . substr($rs->cite_original, -10, 6);
     }
     //echo "<BR><B>".date("r")."</B>";
