@@ -39,7 +39,7 @@ INNER JOIN entidades AS c ON b.id_entidad = c.id WHERE a.id = '$id'");
             }
             $id_entidad=$rs2->id;
         }
-        $this->Image('escudo_b.jpg', 18 ,8, 20 , 20,'JPG', '');
+        //$this->Image('escudo_b.jpg', 18 ,8, 20 , 20,'JPG', '');
         $this->Image($image_file, 137, 7, 60, 18, 'JPG');
         $this->SetFont('Helvetica', 'B', 20);
         //$this->Ln(120);
@@ -193,7 +193,7 @@ try {
         if($rs->mosca_remitente != '')
             $pdf->writeHTML(strtoupper($rs->mosca_remitente));
         $nombre.='_' . substr($rs->cite_original, -10, 6);
-        
+
     }
 } catch (PDOException $e) {
     print "Error!: " . $e->getMessage() . "<br/>";
